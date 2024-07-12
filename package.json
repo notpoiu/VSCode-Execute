@@ -1,0 +1,64 @@
+{
+  "name": "executor-execute",
+  "displayName": "Executor Execute",
+  "description": "Execute the current contents of the file to Roblox",
+  "version": "0.0.3",
+  "publisher": "ActualMasterOogway",
+  "engines": {
+    "vscode": "^1.56.0",
+    "vscode-insiders": "^1.56.0"
+  },
+  "activationEvents": [
+    "onCommand:vsexecute.executeCurrentFile",
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./out/install.js"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/express": "^4.17.21",
+    "@types/localtunnel": "^2.0.4",
+    "@types/node": "^14.14.37",
+    "@types/vscode": "^1.56.0",
+    "typescript": "^4.0.0",
+    "vscode-test": "^1.4.0"
+  },
+  "keywords": [
+    "roblox execute",
+    "script ware",
+    "scripware",
+    "synapse",
+    "synapse",
+    "roblox",
+    "krnl",
+    "krampus",
+    "roexec",
+    "ro-exec",
+    "oogway bytes",
+    "valkyrie",
+    "delta",
+    "codex",
+    "hydrogen",
+    "macsploit",
+    "icognito"
+  ],
+  "dependencies": {
+    "axios": "^1.7.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "localtunnel": "^1.8.3"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "vsexecute.executeCurrentFile",
+        "title": "Execute Current Opened File"
+      }
+    ]
+  }
+}
