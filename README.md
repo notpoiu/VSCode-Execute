@@ -4,6 +4,7 @@ A VS Code extension that executes the contents of the current opened file
 
 > [!NOTE]
 > This will most likely not work with Android Virtual Machines such as Bluestacks, Mumu, Memu, etc.
+> You'd have to port forward port 6182 and execute this `getgenv().VSLink = http://IPv4:6182/` before u execute the connect script, i recommend just putting this ontop of the other code, make sure to replace 'IPv4' with [your actual IPv4 Address](https://api.ipify.org/).
 
 ## Installation
 
