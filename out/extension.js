@@ -30,10 +30,8 @@ exports.deactivate = exports.activate = void 0;
 const vscode = __importStar(require("vscode"));
 const express_1 = __importDefault(require("express"));
 const bodyParser = __importStar(require("body-parser"));
-const localtunnel_1 = __importDefault(require("localtunnel"));
 let savedBody = '';
 let outputChannel = null;
-let tunnelUrl = '';
 async function activate(context) {
     const app = (0, express_1.default)();
     app.use(bodyParser.json());
@@ -42,7 +40,7 @@ async function activate(context) {
         if (Output != undefined) {
             vscode.window.showInformationMessage(Output);
             if (!outputChannel) {
-                outputChannel = vscode.window.createOutputChannel('VS Code Execute');
+                outputChannel = vscode.window.createOutputChannel('VSCode Execute');
             }
             outputChannel.appendLine(Output);
             outputChannel.show();
@@ -51,20 +49,7 @@ async function activate(context) {
         savedBody = '';
     });
     const server = app.listen(6182, async () => {
-        vscode.window.showInformationMessage('Server is running on port 6182.');
-        const tunnel = await (0, localtunnel_1.default)({ port: 6182 });
-        tunnelUrl = tunnel.url;
-        if (tunnelUrl) {
-            vscode.window.showInformationMessage(`LocalTunnel URL: ${tunnelUrl}`);
-            context.subscriptions.push({
-                dispose: () => {
-                    tunnel.close();
-                    server.close();
-                }
-            });
-        }
-        else
-            vscode.window.showErrorMessage(`Failed to start localtunnel, please run 'lt --port 6182'`);
+        vscode.window.showInformationMessage('Server is running on port 6182. http://localhost:6182');
     });
     let executeFileDisposable = vscode.commands.registerCommand('vsexecute.executeCurrentFile', () => {
         const editor = vscode.window.activeTextEditor;
@@ -76,13 +61,7 @@ async function activate(context) {
         }
     });
     let copyUrlDisposable = vscode.commands.registerCommand('vsexecute.copyVSURL', async () => {
-        if (tunnelUrl) {
-            await vscode.env.clipboard.writeText(tunnelUrl);
-            vscode.window.showInformationMessage('LocalTunnel URL copied to clipboard.');
-        }
-        else {
-            vscode.window.showErrorMessage('LocalTunnel URL is not available.');
-        }
+        await vscode.env.clipboard.writeText("http://localhost:6182");
     });
     context.subscriptions.push(executeFileDisposable);
     context.subscriptions.push(copyUrlDisposable);

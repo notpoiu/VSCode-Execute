@@ -1,9 +1,12 @@
 {
-  "name": "executor-execute",
-  "displayName": "Executor Execute",
-  "description": "Execute the current contents of the file to Roblox",
-  "version": "0.0.3",
+  "name": "vscode-execute",
+  "displayName": "VSCode Execute",
+  "description": "Execute the current contents of the file to Roblox, an executor is required for this to work",
+  "version": "0.0.4",
   "publisher": "ActualMasterOogway",
+  "repository": {
+    "url": "https://github.com/ActualMasterOogway/VSCode-Execute"
+  },
   "engines": {
     "vscode": "^1.56.0",
     "vscode-insiders": "^1.56.0"
@@ -32,7 +35,7 @@
     "roblox execute",
     "script ware",
     "scripware",
-    "synapse",
+    "vscode execute",
     "synapse",
     "roblox",
     "krnl",
@@ -40,18 +43,17 @@
     "roexec",
     "ro-exec",
     "oogway bytes",
-    "valkyrie",
+    "execute",
     "delta",
     "codex",
     "hydrogen",
     "macsploit",
-    "icognito"
+    "valkyrie"
   ],
   "dependencies": {
     "axios": "^1.7.2",
     "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "localtunnel": "^1.8.3"
+    "express": "^4.17.1"
   },
   "contributes": {
     "commands": [
