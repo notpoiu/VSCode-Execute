@@ -11,7 +11,7 @@ task.spawn(function() -- me when celery's autoexec yields
     local HttpGet = HasProperty(game, "HttpGet") and function(url: string) return game:HttpGet(url) end or httpget or httpGet or HttpGet or Httpget or function(url) return HttpService:GetAsync(url) end
     local Request = request or http and http.request or Http and Http.request or function(options) local s = pcall(HttpService.GetAsync, HttpService, options.Url, false, options.Headers) if not s then task.defer(error, options.Headers.ConsoleOutput) end end
 
-    Link = "http://93.222.148.128:6182/"
+    Link = getgenv().VSLink or "http://localhost:6182/"
 
     local isLocalHost = true
 
