@@ -13,7 +13,7 @@ task.spawn(function() -- me when celery's autoexec yields
 
     Link = getgenv().VSLink or "http://localhost:6182/"
 
-    local isLocalHost = true
+    local isLocalHost = Link:find("localhost") ~= nil or Link:find("127.0.0.1") ~= nil
 
     local OldBody = HttpGet(Link)
 
