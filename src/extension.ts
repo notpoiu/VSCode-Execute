@@ -2,29 +2,34 @@ import * as vscode from 'vscode';
 import express from 'express';
 import * as bodyParser from 'body-parser';
 
-let savedBody: string = '';
-let outputChannel: vscode.OutputChannel | null = null;
+let ScheduledCode: string = '';
+let OutputChannel: vscode.OutputChannel | null = null;
 
 export async function activate(context: vscode.ExtensionContext) {
     const app = express();
     app.use(bodyParser.json());
 
     app.get('/', (req: express.Request, res: express.Response) => {
-        let Output = req.header("ConsoleOutput");
+        let ToSchedule = req.header("Code")
+        if (ToSchedule != undefined) {
+            ScheduledCode = ToSchedule
+        } else {
+            let Output = req.header("ConsoleOutput");
 
-        if (Output != undefined) {
-            vscode.window.showInformationMessage(Output);
+            if (Output != undefined) {
+                vscode.window.showInformationMessage(Output);
 
-            if (!outputChannel) {
-                outputChannel = vscode.window.createOutputChannel('VSCode Execute');
+                if (!OutputChannel) {
+                    OutputChannel = vscode.window.createOutputChannel('VSCode Execute');
+                }
+
+                OutputChannel.appendLine(Output);
+                OutputChannel.show();
             }
 
-            outputChannel.appendLine(Output);
-            outputChannel.show();
+            res.json(ScheduledCode);
+            ScheduledCode = '';
         }
-
-        res.json(savedBody);
-        savedBody = '';
     });
 
     const server = app.listen(6182, async () => {
@@ -34,7 +39,7 @@ export async function activate(context: vscode.ExtensionContext) {
     let executeFileDisposable = vscode.commands.registerCommand('vsexecute.executeCurrentFile', () => {
         const editor = vscode.window.activeTextEditor;
         if (editor) {
-            savedBody = editor.document.getText();
+            ScheduledCode = editor.document.getText();
         } else {
             vscode.window.showErrorMessage('No active editor found.');
         }

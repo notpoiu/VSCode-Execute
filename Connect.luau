@@ -1,4 +1,4 @@
-task.spawn(function() -- me when celery's autoexec yields
+task.spawn(function() -- celery's autoexec yields
     local HttpService, Link = game:GetService("HttpService"), nil
 
     local HasProperty = function(ins, prop)
