@@ -24,7 +24,7 @@ task.spawn(function() -- celery's autoexec yields
             local Callable, Error = loadstring(HttpService:JSONDecode(Body))
 
             if Callable ~= nil then
-                Callable()
+                task.spawn(Callable)
             else
                 Request{
                     Url = Link,
