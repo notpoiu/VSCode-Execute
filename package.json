@@ -61,6 +61,22 @@
         "command": "vsexecute.executeCurrentFile",
         "title": "Execute Current Opened File"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "VSCode Execute",
+      "properties": {
+        "vscode-execute.useSpecificFile": {
+          "type": "boolean",
+          "default": false,
+          "description": "option to use a specific file instead of the current file"
+        },
+        "vscode-execute.specificFile": {
+          "type": "string",
+          "default": "",
+          "description": "the specific file to use if 'use-specific-file' is enabled (from the root of the workspace)"
+        }
+      }
+    }
   }
 }

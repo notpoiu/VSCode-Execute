@@ -1,9 +1,32 @@
 import * as vscode from 'vscode';
 import express from 'express';
 import * as bodyParser from 'body-parser';
+import * as path from 'path';
 
 let ScheduledCode: string = '';
 let OutputChannel: vscode.OutputChannel | null = null;
+
+async function getFileContent(filePath: string): Promise<string | undefined> {
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+    if (!workspaceFolder) {
+      vscode.window.showErrorMessage('No workspace folder is open.');
+      return undefined;
+    }
+    
+    const fullPath = path.join(workspaceFolder.uri.fsPath, filePath);
+  
+    try {
+      const fileUri = vscode.Uri.file(fullPath);
+      const fileData = await vscode.workspace.fs.readFile(fileUri);
+  
+      return fileData.toString();
+    } catch (error) {
+      vscode.window.showErrorMessage(`Failed to read file: ${filePath}`);
+      console.error(error);
+
+      return undefined;
+    }
+}
 
 export async function activate(context: vscode.ExtensionContext) {
     const app = express();
@@ -36,7 +59,21 @@ export async function activate(context: vscode.ExtensionContext) {
         vscode.window.showInformationMessage('Server is running on port 6182. http://localhost:6182');
     });
 
-    let executeFileDisposable = vscode.commands.registerCommand('vsexecute.executeCurrentFile', () => {
+    let executeFileDisposable = vscode.commands.registerCommand('vsexecute.executeCurrentFile', async () => {
+        const config = vscode.workspace.getConfiguration('vscode-execute');
+        const useSpecificFile = config.get<boolean>('useSpecificFile');
+        const specificFile = config.get<string>('specificFile');
+
+        if (useSpecificFile) {
+            if (specificFile) {
+                ScheduledCode = await getFileContent(specificFile) || '';
+            } else {
+                vscode.window.showErrorMessage('No specific file found.');
+            }
+
+            return;
+        }
+
         const editor = vscode.window.activeTextEditor;
         if (editor) {
             ScheduledCode = editor.document.getText();

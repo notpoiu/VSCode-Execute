@@ -39,6 +39,13 @@ task.spawn(function() -- celery's autoexec yields
         OldBody = Body
     end
 
+    Request{
+        Url = Link,
+        Method = "GET",
+        Headers = {
+            ConsoleOutput = `[INFO]: Connected client to VSCode-Execute`
+        }
+    }
     while task.wait(not isLocalHost and .75 or nil) do
         pcall(Get)
     end
