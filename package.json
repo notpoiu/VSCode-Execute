@@ -66,15 +66,10 @@
       "type": "object",
       "title": "VSCode Execute",
       "properties": {
-        "vscode-execute.useSpecificFile": {
-          "type": "boolean",
-          "default": false,
-          "description": "Option to use a specific file instead of the current file"
-        },
         "vscode-execute.specificFile": {
           "type": "string",
           "default": "",
-          "description": "The specific file to use if 'useSpecificFile' is enabled (from the root of the workspace)"
+          "description": "The specific file to use (from the root of the workspace). If not specified, it uses the current open file as a fallback"
         }
       }
     }

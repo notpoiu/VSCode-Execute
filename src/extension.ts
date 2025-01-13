@@ -61,16 +61,10 @@ export async function activate(context: vscode.ExtensionContext) {
 
     let executeFileDisposable = vscode.commands.registerCommand('vsexecute.executeCurrentFile', async () => {
         const config = vscode.workspace.getConfiguration('vscode-execute');
-        const useSpecificFile = config.get<boolean>('useSpecificFile');
         const specificFile = config.get<string>('specificFile');
 
-        if (useSpecificFile) {
-            if (specificFile) {
-                ScheduledCode = await getFileContent(specificFile) || '';
-            } else {
-                vscode.window.showErrorMessage('No specific file found.');
-            }
-
+        if (specificFile && specificFile?.trim() !== '') {
+            ScheduledCode = await getFileContent(specificFile) || '';
             return;
         }
 
